@@ -11,12 +11,9 @@ project(vrep_youbot_plugin)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -fPIC") 
 set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -D__linux") 
 
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS roslib rosconsole rostime rospack roscpp_serialization roscpp)
 find_package(PCL 1.7 REQUIRED)
 #LIBRARIES v_repExtyouBot
-catkin_package(
-               CATKIN_DEPENDS roscpp rosconsole std_msgs sensor_msgs cv_bridge tf brics_actuator roslib
-               DEPENDS opencv pthread dl PCL roscpp rosconsole roslib)
 
 
 include_directories(include ${catkin_INCLUDE_DIRS} ${PCL_INCLUDE_DIRS})
@@ -41,50 +38,55 @@ message("Catkin Libs: " ${catkin_LIBRARIES})
 
 #rosbuild_add_executable(
 
-LINK_DIRECTORIES("/opt/ros/hydro/lib")
+#LINK_DIRECTORIES("/opt/ros/hydro/lib")
 
 add_library(
 #add_executable(
-v_repExtyouBot
-
-src/v_repExtyouBot.cpp 
-src/v_repLib.cpp 
-
-
-src/lua/GenericLuaFunctionRegistry.cpp
-src/lua/GenericLuaCallback.cpp
-
-src/VRepPluglet.cpp
-src/VRepPlugletRegistry.cpp
-
-src/ros/RosLuaCallback.cpp
-src/ros/VRepRosPluglet.cpp
-
-src/ros/callback/ClockCallback.cpp
-src/ros/pluglet/ClockPluglet.cpp
-
-src/ros/callback/LaserScanCallback.cpp
-src/ros/pluglet/LaserScanPluglet.cpp
-
-src/ros/callback/PointCloudCallback.cpp
-src/ros/pluglet/PointCloudPluglet.cpp
-
-src/ros/callback/JointControlCallback.cpp
-src/ros/pluglet/JointControlPluglet.cpp
-
-src/ros/callback/SwedishBaseControllerCallback.cpp
-src/ros/pluglet/SwedishBaseControllerPluglet.cpp
+    v_repExtyouBot
+    
+    src/v_repExtyouBot.cpp 
+    src/v_repLib.cpp 
+    
+    
+    src/lua/GenericLuaFunctionRegistry.cpp
+    src/lua/GenericLuaCallback.cpp
+    
+    src/VRepPluglet.cpp
+    src/VRepPlugletRegistry.cpp
+    
+    src/ros/RosLuaCallback.cpp
+    src/ros/VRepRosPluglet.cpp
+    
+    src/ros/callback/ClockCallback.cpp
+    src/ros/pluglet/ClockPluglet.cpp
+    
+    src/ros/callback/LaserScanCallback.cpp
+    src/ros/pluglet/LaserScanPluglet.cpp
+    
+    src/ros/callback/PointCloudCallback.cpp
+    src/ros/pluglet/PointCloudPluglet.cpp
+    
+    src/ros/callback/JointControlCallback.cpp
+    src/ros/pluglet/JointControlPluglet.cpp
+    
+    src/ros/callback/SwedishBaseControllerCallback.cpp
+    src/ros/pluglet/SwedishBaseControllerPluglet.cpp
 ) 
 
 target_link_libraries(v_repExtyouBot 
     pthread
     dl
-    roslib
-    rosconsole
-    rostime
-    rospack
-    roscpp_serialization
-    roscpp
+#    roslib
+#    rosconsole
+#    rostime
+#    rospack
+#    roscpp_serialization
+#    roscpp
     boost_system
     ${catkin_LIBRARIES}
+)
+
+catkin_package(
+    CATKIN_DEPENDS roscpp rosconsole std_msgs sensor_msgs cv_bridge tf brics_actuator roslib
+    DEPENDS opencv pthread dl PCL roscpp rosconsole roslib
 )

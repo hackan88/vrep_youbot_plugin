@@ -37,10 +37,10 @@ void ClockCallback::luaCall(Argslist args) {
 	}
 
 	
-	ClockPluglet* pluglet = new ClockPluglet();
-	pluglet->setTopicName(boost::any_cast<std::string>(args[0]));
-
-	vrep::VRepPlugletRegistry::getInstance()->getPluglets().push_back(pluglet);
+//	ClockPluglet* pluglet = new ClockPluglet();
+//	pluglet->setTopicName(boost::any_cast<std::string>(args[0]));
+//
+//	vrep::VRepPlugletRegistry::getInstance()->getPluglets().push_back(pluglet);
 	
 }
 
