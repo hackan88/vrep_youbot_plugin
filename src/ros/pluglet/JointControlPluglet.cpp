@@ -77,8 +77,7 @@ void JointControlPluglet::positionCallback(
 			simSetObjectIntParameter(handle, 2000, 1);
 			simSetObjectIntParameter(handle, 2001, 1);
 
-			simSetJointTargetPosition(handle,
-						msg.positions[i].value);
+			simSetJointTargetPosition(handle, static_cast<double>(msg.positions[i].value) );
 
 		}
 	}
@@ -100,34 +99,12 @@ void JointControlPluglet::velocityCallback(
 		int handle = simGetObjectHandle(msg.velocities[i].joint_uri.c_str());
 
 		if (handle > 0) {
-
-			if (std::fabs(msg.velocities[i].value) < 0.0000001) {
-
-				brics_actuator::JointPositions msg_single;
-				msg_single.poisonStamp = msg.poisonStamp;
-				brics_actuator::JointValue value = msg.velocities[i];
-				value.unit = "rad";
-				float dval = 0.0;
-				simGetJointPosition(handles[i], &dval);
-				value.value = dval;
-				msg_single.positions.push_back(value);
-				//positionCallback(msg_single);
-				simSetObjectIntParameter(handle, 2000, 1);
-				simSetObjectIntParameter(handle, 2001, 1);
-
-				simSetJointTargetPosition(handle, dval);
-			} else {
-
-				simSetObjectIntParameter(handle, 2000, 1);
-				simSetObjectIntParameter(handle, 2001, 0);
-				simSetObjectIntParameter(handle, 1000, 1);
-
-				simSetJointTargetVelocity(handle,
-					msg.velocities[i].value);
-			}
+			simSetObjectIntParameter(handle, 2000, 1);
+			simSetObjectIntParameter(handle, 2001, 0);
+			simSetObjectIntParameter(handle, 1000, 1);
+			simSetJointTargetVelocity(handle, static_cast<double>(msg.velocities[i].value));
 		}
 	}
-
 }
 
 void JointControlPluglet::torqueCallback(
